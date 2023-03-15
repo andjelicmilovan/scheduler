@@ -1,14 +1,13 @@
 package com.spring.quartz.configuration;
 
 import com.spring.quartz.factory.AutoWiringSpringBeanJobFactory;
+import java.util.Properties;
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
-import javax.sql.DataSource;
-import java.util.Properties;
 
 @Configuration
 @RequiredArgsConstructor

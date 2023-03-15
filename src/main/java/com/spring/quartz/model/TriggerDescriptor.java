@@ -1,13 +1,12 @@
 package com.spring.quartz.model;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.TimeZone;
 import lombok.Data;
 import org.quartz.JobDataMap;
 import org.quartz.Trigger;
 import org.quartz.Trigger.TriggerState;
-
-import java.sql.Date;
-import java.time.LocalDateTime;
-import java.util.TimeZone;
 
 import static java.time.ZoneId.systemDefault;
 import static java.util.UUID.randomUUID;
@@ -26,26 +25,44 @@ public class TriggerDescriptor {
     private String cron;
     private TriggerState triggerState;
 
+    /**
+     * @param trigger the Trigger used to build this descriptor
+     * @return the TriggerDescriptor
+     */
+    public static TriggerDescriptor buildDescriptor(Trigger trigger, TriggerState triggerState) {
+        return new TriggerDescriptor()
+                .setName(trigger.getKey().getName())
+                .setGroup(trigger.getKey().getGroup())
+                .setFireTime((LocalDateTime) trigger.getJobDataMap().get("fireTime"))
+                .setCron(trigger.getJobDataMap().getString("cron"))
+                .setTriggerState(triggerState);
+    }
+
     public TriggerDescriptor setName(final String name) {
         this.name = name;
         return this;
     }
+
     public TriggerDescriptor setGroup(final String group) {
         this.group = group;
         return this;
     }
+
     public TriggerDescriptor setFireTime(final LocalDateTime fireTime) {
         this.fireTime = fireTime;
         return this;
     }
+
     public TriggerDescriptor setCron(final String cron) {
         this.cron = cron;
         return this;
     }
+
     public TriggerDescriptor setTriggerState(final TriggerState triggerState) {
         this.triggerState = triggerState;
         return this;
     }
+
     private String buildName() {
         return isEmpty(name) ? randomUUID().toString() : name;
     }
@@ -75,19 +92,5 @@ public class TriggerDescriptor {
         }
 
         throw new IllegalStateException("unsupported trigger descriptor " + this);
-    }
-    /**
-     *
-     * @param trigger
-     *            the Trigger used to build this descriptor
-     * @return the TriggerDescriptor
-     */
-    public static TriggerDescriptor buildDescriptor(Trigger trigger, TriggerState triggerState) {
-        return new TriggerDescriptor()
-                .setName(trigger.getKey().getName())
-                .setGroup(trigger.getKey().getGroup())
-                .setFireTime((LocalDateTime) trigger.getJobDataMap().get("fireTime"))
-                .setCron(trigger.getJobDataMap().getString("cron"))
-                .setTriggerState(triggerState);
     }
 }
