@@ -1,21 +1,10 @@
 server:
-  servlet:
-    context-path: /api
-  compression:
-    enabled: true
   port: 8081
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/payment
     username: milovan
     password:
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        jdbc:
-          lob:
-            non_contextual_creation: true
   quartz:
     job-store-type: jdbc
     jdbc:

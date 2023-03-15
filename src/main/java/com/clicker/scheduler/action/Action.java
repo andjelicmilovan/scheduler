@@ -10,13 +10,11 @@ import org.springframework.context.ApplicationContext;
 @Slf4j
 public class Action implements Job {
 
-    private ObjectMapper objectMapper;
-
     public void execute(JobExecutionContext context) throws JobExecutionException {
         try {
             ApplicationContext applicationContext = (ApplicationContext) context.getScheduler().getContext().get("applicationContext");
 
-            objectMapper = applicationContext.getBean(ObjectMapper.class);
+            ObjectMapper objectMapper = applicationContext.getBean(ObjectMapper.class);
 
             log.info("Action ** {} ** starting @ {}", context.getJobDetail().getKey().getName(), context.getFireTime());
             log.info("Stored Data {}", objectMapper.writeValueAsString(context.getJobDetail().getJobDataMap()));
