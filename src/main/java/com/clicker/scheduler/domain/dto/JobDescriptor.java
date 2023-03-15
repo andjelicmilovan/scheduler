@@ -1,9 +1,9 @@
-package com.spring.quartz.model;
+package com.clicker.scheduler.domain.dto;
 
+import com.clicker.scheduler.action.Action;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.spring.quartz.action.Action;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;

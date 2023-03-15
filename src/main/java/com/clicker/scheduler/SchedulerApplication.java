@@ -1,13 +1,13 @@
-package com.spring.quartz;
+package com.clicker.scheduler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class QuartzApplication {
+public class SchedulerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(QuartzApplication.class, args);
+        SpringApplication.run(SchedulerApplication.class, args);
     }
 
 }

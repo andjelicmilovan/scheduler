@@ -1,4 +1,4 @@
-package com.spring.quartz.model;
+package com.clicker.scheduler.domain.dto;
 
 import java.sql.Date;
 import java.time.LocalDateTime;

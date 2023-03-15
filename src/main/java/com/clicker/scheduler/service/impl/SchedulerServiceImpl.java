@@ -1,9 +1,9 @@
-package com.spring.quartz.service.impl;
+package com.clicker.scheduler.service.impl;
 
-import com.spring.quartz.domain.dto.SchedulerDto;
-import com.spring.quartz.model.JobDescriptor;
-import com.spring.quartz.model.TriggerDescriptor;
-import com.spring.quartz.service.SchedulerService;
+import com.clicker.scheduler.domain.dto.JobDescriptor;
+import com.clicker.scheduler.domain.dto.SchedulerDto;
+import com.clicker.scheduler.domain.dto.TriggerDescriptor;
+import com.clicker.scheduler.service.SchedulerService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,21 +37,6 @@ public class SchedulerServiceImpl implements SchedulerService {
     private final static String groupName = "scheduler";
     private final static String groupNameTrigger = "scheduler";
     private final Scheduler scheduler;
-
-    public JobDescriptor createJob(String group, JobDescriptor descriptor) {
-        descriptor.setGroup(group);
-        JobDetail jobDetail = descriptor.buildJobDetail();
-        Set<Trigger> triggersForJob = descriptor.buildTriggers();
-        log.info("About to save job with key - {}", jobDetail.getKey());
-        try {
-            scheduler.scheduleJob(jobDetail, triggersForJob, false);
-            log.info("Job with key - {} saved successfully", jobDetail.getKey());
-        } catch (SchedulerException e) {
-            log.error("Could not save job with key - {} due to error - {}", jobDetail.getKey(), e.getLocalizedMessage());
-            throw new IllegalArgumentException(e.getLocalizedMessage());
-        }
-        return descriptor;
-    }
 
     public List<JobDescriptor> findAllJobs() {
         List<JobDescriptor> jobList = new ArrayList<>();
@@ -105,22 +90,6 @@ public class SchedulerServiceImpl implements SchedulerService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public Optional<JobDescriptor> findJob(String group, String name) {
-        try {
-            JobDetail jobDetail = scheduler.getJobDetail(jobKey(name, group));
-            if (Objects.nonNull(jobDetail)) {
-                List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobDetail.getKey());
-                return Optional.of(
-                        JobDescriptor.buildDescriptor(jobDetail, triggers, scheduler));
-            }
-        } catch (SchedulerException e) {
-            log.error("Could not find job with key - {}.{} due to error - {}", group, name, e.getLocalizedMessage());
-        }
-        log.warn("Could not find job with key - {}.{}", group, name);
-        return Optional.empty();
-    }
-
     public Optional<JobDetail> updateJob(String group, String name, JobDescriptor descriptor) {
         try {
             JobDetail oldJobDetail = scheduler.getJobDetail(jobKey(name, group));
@@ -142,36 +111,9 @@ public class SchedulerServiceImpl implements SchedulerService {
         return Optional.empty();
     }
 
-    public void deleteJob(String group, String name) {
-        try {
-            scheduler.deleteJob(jobKey(name, group));
-            log.info("Deleted job with key - {}.{}", group, name);
-        } catch (SchedulerException e) {
-            log.error("Could not delete job with key - {}.{} due to error - {}", group, name, e.getLocalizedMessage());
-        }
-    }
-
-    public void pauseJob(String group, String name) {
-        try {
-            scheduler.pauseJob(jobKey(name, group));
-            log.info("Paused job with key - {}.{}", group, name);
-        } catch (SchedulerException e) {
-            log.error("Could not pause job with key - {}.{} due to error - {}", group, name, e.getLocalizedMessage());
-        }
-    }
-
     public void pauseJob(SchedulerDto schedulerDto) throws SchedulerException {
         log.info("Paused job with key - {}.{}", schedulerDto.getName(), groupNameTrigger);
         scheduler.pauseJob(jobKey(schedulerDto.getName(), groupNameTrigger));
-    }
-
-    public void resumeJob(String group, String name) {
-        try {
-            scheduler.resumeJob(jobKey(name, group));
-            log.info("Resumed job with key - {}.{}", group, name);
-        } catch (SchedulerException e) {
-            log.error("Could not resume job with key - {}.{} due to error - {}", group, name, e.getLocalizedMessage());
-        }
     }
 
     @Override

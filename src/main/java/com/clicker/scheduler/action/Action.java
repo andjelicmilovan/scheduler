@@ -1,4 +1,4 @@
-package com.spring.quartz.action;
+package com.clicker.scheduler.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

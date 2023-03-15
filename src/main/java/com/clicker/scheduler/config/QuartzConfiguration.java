@@ -1,6 +1,6 @@
-package com.spring.quartz.configuration;
+package com.clicker.scheduler.config;
 
-import com.spring.quartz.factory.AutoWiringSpringBeanJobFactory;
+import com.clicker.scheduler.factory.AutoWiringSpringBeanJobFactory;
 import java.util.Properties;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;

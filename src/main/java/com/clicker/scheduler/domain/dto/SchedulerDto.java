@@ -1,4 +1,4 @@
-package com.spring.quartz.domain.dto;
+package com.clicker.scheduler.domain.dto;
 
 import java.io.Serializable;
 import java.util.Date;

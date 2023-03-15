@@ -1,8 +1,8 @@
-package com.spring.quartz.controller;
+package com.clicker.scheduler.controller;
 
-import com.spring.quartz.domain.dto.SchedulerDto;
-import com.spring.quartz.model.JobDescriptor;
-import com.spring.quartz.service.SchedulerService;
+import com.clicker.scheduler.domain.dto.JobDescriptor;
+import com.clicker.scheduler.domain.dto.SchedulerDto;
+import com.clicker.scheduler.service.SchedulerService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

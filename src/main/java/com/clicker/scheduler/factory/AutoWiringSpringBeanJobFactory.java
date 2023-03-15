@@ -1,4 +1,4 @@
-package com.spring.quartz.factory;
+package com.clicker.scheduler.factory;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.BeansException;
